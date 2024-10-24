@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 import { fetchPortfolios } from '../../api/portfolio/fetch';
+import { fetchPropertyCount } from '../../api/property/fetchPropertyCount'; // Fetch count of properties
 import { Portfolio } from '../../api/portfolio/types';
 import CreatePortfolio from './CreatePortfolio';
 import DeletePortfolio from './DeletePortfolio';
@@ -18,6 +19,7 @@ const PortfolioList: React.FC = () => {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [propertyCounts, setPropertyCounts] = useState<{ [key: number]: number }>({});
   const [selectedPortfolioId, setSelectedPortfolioId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -28,6 +30,13 @@ const PortfolioList: React.FC = () => {
       const fetchedPortfolios = await fetchPortfolios();
       if (fetchedPortfolios) {
         setPortfolios(fetchedPortfolios);
+        // Fetch property counts for each portfolio
+        fetchedPortfolios.forEach(async (portfolio) => {
+          const count = await fetchPropertyCount(portfolio.id);
+          if (count !== null) {
+            setPropertyCounts((prevCounts) => ({ ...prevCounts, [portfolio.id]: count }));
+          }
+        });
       } else {
         setError('Failed to fetch portfolios');
       }
@@ -87,12 +96,17 @@ const PortfolioList: React.FC = () => {
                 <UpdatePortfolio portfolio={portfolio} onPortfolioUpdated={reloadPortfolios} />
                 <DeletePortfolio portfolioId={portfolio.id} onPortfolioDeleted={reloadPortfolios} />
 
-                {/* Styled Show Properties Button */}
-                <CustomButton 
-                  onClick={() => handleShowProperties(portfolio.id)} 
-                  label="Show Properties" 
-                  colorType="primary" 
-                />
+                {/* Show Properties button and property count */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
+                  <CustomButton 
+                    onClick={() => handleShowProperties(portfolio.id)} 
+                    label="Show Properties" 
+                    colorType="primary" 
+                  />
+                  <Typography variant="body2" style={{ color: textColor, marginLeft: '1rem' }}>
+                    Properties: {propertyCounts[portfolio.id] || 0}
+                  </Typography>
+                </div>
               </CardContent>
             </Card>
           </Grid>

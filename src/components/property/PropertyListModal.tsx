@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Button, Grid, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
 import { fetchProperties } from '../../api/property/fetch';
 import { Property } from '../../api/property/types';
 import CreateProperty from './CreateProperty';
 import DeleteProperty from './DeleteProperty';
 import UpdateProperty from './UpdateProperty';
+import CustomButton from '../CustomButton';
 
 interface PropertyListProps {
   portfolioId: number;
@@ -46,29 +47,36 @@ const PropertyListModal: React.FC<PropertyListProps> = ({ portfolioId, open, onC
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-      <DialogTitle className="text-blue-900">Properties in Portfolio</DialogTitle>
-      <DialogContent>
+      <DialogTitle style={{ color: '#29a745' }}>Properties in Portfolio</DialogTitle>
+      <DialogContent style={{ backgroundColor: '#2d2d2d' }}>
         <CreateProperty portfolioId={portfolioId} onPropertyCreated={reloadProperties} />
         {loading ? (
-          <Typography>Loading properties...</Typography>
+          <Typography style={{ color: '#fff' }}>Loading properties...</Typography>
         ) : error ? (
           <Typography color="error">{error}</Typography>
         ) : (
-          <Grid container spacing={3} className="mt-4">
+          <Grid container spacing={3} style={{ marginTop: '1rem' }}>
             {properties.map((property) => (
               <Grid item xs={12} sm={6} md={4} key={property.id}>
-                <Card className="shadow-lg transition-transform transform hover:scale-105">
+                <Card
+                  style={{
+                    backgroundColor: '#1c1c1c',
+                    borderTop: '4px solid #29a745',
+                    transition: 'transform 0.3s',
+                  }}
+                  className="hover:scale-105 shadow-lg"
+                >
                   <CardContent className="p-4">
-                    <Typography variant="h6" className="font-bold text-blue-700">
+                    <Typography variant="h6" style={{ color: '#29a745', fontWeight: 'bold' }}>
                       {property.address}
                     </Typography>
-                    <Typography variant="body2" className="mt-2">
+                    <Typography variant="body2" style={{ color: '#fff', marginTop: '0.5rem' }}>
                       Value: ${property.estimated_value}
                     </Typography>
-                    <Typography variant="body2" className="mt-2">
+                    <Typography variant="body2" style={{ color: '#fff', marginTop: '0.5rem' }}>
                       Square Footage: {property.square_footage} sq ft
                     </Typography>
-                    <div className="flex justify-between mt-4">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
                       <UpdateProperty property={property} onPropertyUpdated={reloadProperties} />
                       <DeleteProperty propertyId={property.id} onPropertyDeleted={reloadProperties} />
                     </div>
@@ -80,7 +88,7 @@ const PropertyListModal: React.FC<PropertyListProps> = ({ portfolioId, open, onC
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">Close</Button>
+        <CustomButton onClick={onClose} label="Close" colorType="secondary" />
       </DialogActions>
     </Dialog>
   );
