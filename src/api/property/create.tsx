@@ -1,6 +1,12 @@
 import { Property } from './types';
 
-export const createProperty = async (portfolioId: number, address: string, estimatedValue: number, constructionYear: number, squareFootage: number): Promise<Property | null> => {
+export const createProperty = async (
+  portfolioId: number, 
+  address: string, 
+  estimatedValue: number, 
+  constructionYear: number, 
+  squareFootage: number
+): Promise<Property | null> => {
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/create_property/`, {
       method: 'POST',
@@ -12,7 +18,7 @@ export const createProperty = async (portfolioId: number, address: string, estim
         address,
         estimated_value: estimatedValue,
         construction_year: constructionYear,
-        square_footage: squareFootage
+        square_footage: squareFootage,
       })
     });
 

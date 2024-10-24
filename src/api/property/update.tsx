@@ -1,13 +1,13 @@
 import { Property } from './types';
 
-export const updateProperty = async (propertyId: number, updates: Partial<Property>): Promise<Property | null> => {
+export const updateProperty = async (propertyId: number, data: Partial<Property>): Promise<Property | null> => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/update_property/${propertyId}/`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/${propertyId}/update_property/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updates)
+      body: JSON.stringify(data),
     });
 
     if (response.ok) {
@@ -18,7 +18,7 @@ export const updateProperty = async (propertyId: number, updates: Partial<Proper
       return null;
     }
   } catch (error) {
-    console.error('Error while updating property:', error);
+    console.error('Error updating property:', error);
     return null;
   }
 };

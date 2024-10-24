@@ -9,6 +9,12 @@ import PropertyListModal from '../property/PropertyListModal';
 import CustomButton from '../CustomButton';
 
 const PortfolioList: React.FC = () => {
+  // Extracted color variables for easier modification
+  const backgroundColor = '#f7f7f7';
+  const cardBackgroundColor = '#2d2d2d';
+  const borderColor = '#29a745';
+  const textColor = '#29a745';
+
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,19 +63,30 @@ const PortfolioList: React.FC = () => {
   }
 
   return (
-    <div className="bg-black p-8 min-h-screen">
-      <CreatePortfolio onPortfolioCreated={reloadPortfolios} />
+    <div style={{ backgroundColor: backgroundColor, padding: '2rem', minHeight: '100vh' }}>
+      {/* Center the Create Portfolio button */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+        <CreatePortfolio onPortfolioCreated={reloadPortfolios} />
+      </div>
+
       <Grid container spacing={3}>
         {portfolios.map((portfolio) => (
           <Grid item xs={12} sm={6} md={4} key={portfolio.id}>
-            <Card className="transition duration-300 transform hover:scale-105 bg-gray-800 shadow-lg hover:bg-gray-900 border-t-4 border-green-500">
+            <Card
+              style={{
+                backgroundColor: cardBackgroundColor,
+                borderTop: `4px solid ${borderColor}`,
+                transition: 'transform 0.3s',
+              }}
+              className="hover:scale-105 hover:bg-gray-700 shadow-lg"
+            >
               <CardContent className="p-4">
-                <Typography variant="h5" className="text-green-400 font-bold">
+                <Typography variant="h5" style={{ color: textColor, fontWeight: 'bold' }}>
                   {portfolio.name}
                 </Typography>
                 <UpdatePortfolio portfolio={portfolio} onPortfolioUpdated={reloadPortfolios} />
                 <DeletePortfolio portfolioId={portfolio.id} onPortfolioDeleted={reloadPortfolios} />
-                
+
                 {/* Styled Show Properties Button */}
                 <CustomButton 
                   onClick={() => handleShowProperties(portfolio.id)} 
