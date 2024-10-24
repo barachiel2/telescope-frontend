@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
-
-interface Portfolio {
-  id: number;
-  name: string;
-  description: string;
-}
-
-const portfolios: Portfolio[] = [
-  { id: 1, name: 'Portfolio 1', description: 'Description of Portfolio 1' },
-  { id: 2, name: 'Portfolio 2', description: 'Description of Portfolio 2' },
-  { id: 3, name: 'Portfolio 3', description: 'Description of Portfolio 3' },
-];
+import { fetchPortfolios } from '../api/portfolio/fetch';
+import { Portfolio } from '../api/portfolio/types'; // Import the Portfolio type
 
 const PortfolioList: React.FC = () => {
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadPortfolios = async () => {
+      setLoading(true);
+      setError(null);
+      const fetchedPortfolios = await fetchPortfolios(); // No token required
+      if (fetchedPortfolios) {
+        setPortfolios(fetchedPortfolios);
+      } else {
+        setError('Failed to fetch portfolios');
+      }
+      setLoading(false);
+    };
+
+    loadPortfolios();
+  }, []);
+
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (error) {
+    return <Typography color="error">{error}</Typography>;
+  }
+
   return (
     <Grid container spacing={3}>
       {portfolios.map((portfolio) => (
