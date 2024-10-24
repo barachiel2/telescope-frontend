@@ -1,13 +1,13 @@
 import { Property } from './types';
 
-export const updateProperty = async (propertyId: number, address: string, estimated_value: number, construction_year: number, square_footage: number): Promise<Property | null> => {
+export const updateProperty = async (propertyId: number, updates: Partial<Property>): Promise<Property | null> => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/${propertyId}/update_property/`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/update_property/${propertyId}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ address, estimated_value, construction_year, square_footage })
+      body: JSON.stringify(updates)
     });
 
     if (response.ok) {

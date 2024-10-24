@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
+import { Card, CardContent, Typography, Grid } from '@mui/material';
 import { fetchPortfolios } from '../api/portfolio/fetch';
 import { fetchProperties } from '../api/property/fetch';
 import { Portfolio } from '../api/portfolio/types';
@@ -17,22 +17,16 @@ const PortfolioList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch portfolios and properties
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       setError(null);
-
       const fetchedPortfolios = await fetchPortfolios();
-      const fetchedProperties = await fetchProperties();
-
-      if (fetchedPortfolios && fetchedProperties) {
+      if (fetchedPortfolios) {
         setPortfolios(fetchedPortfolios);
-        setProperties(fetchedProperties);
       } else {
-        setError('Failed to fetch portfolios or properties');
+        setError('Failed to fetch portfolios');
       }
-
       setLoading(false);
     };
 
@@ -46,8 +40,8 @@ const PortfolioList: React.FC = () => {
     }
   };
 
-  const reloadProperties = async () => {
-    const fetchedProperties = await fetchProperties();
+  const reloadProperties = async (portfolioId: number) => {
+    const fetchedProperties = await fetchProperties(portfolioId);
     if (fetchedProperties) {
       setProperties(fetchedProperties);
     }
@@ -72,7 +66,7 @@ const PortfolioList: React.FC = () => {
                 <Typography variant="h5">{portfolio.name}</Typography>
                 <UpdatePortfolio portfolio={portfolio} onPortfolioUpdated={reloadPortfolios} />
                 <DeletePortfolio portfolioId={portfolio.id} onPortfolioDeleted={reloadPortfolios} />
-                <CreateProperty portfolioId={portfolio.id} onPropertyCreated={reloadProperties} />
+                <CreateProperty portfolioId={portfolio.id} onPropertyCreated={() => reloadProperties(portfolio.id)} />
                 <Typography variant="h6">Properties:</Typography>
                 <Grid container spacing={2}>
                   {properties
@@ -82,8 +76,8 @@ const PortfolioList: React.FC = () => {
                         <Card>
                           <CardContent>
                             <Typography variant="body1">{property.address}</Typography>
-                            <UpdateProperty property={property} onPropertyUpdated={reloadProperties} />
-                            <DeleteProperty propertyId={property.id} onPropertyDeleted={reloadProperties} />
+                            <UpdateProperty property={property} onPropertyUpdated={() => reloadProperties(portfolio.id)} />
+                            <DeleteProperty propertyId={property.id} onPropertyDeleted={() => reloadProperties(portfolio.id)} />
                           </CardContent>
                         </Card>
                       </Grid>

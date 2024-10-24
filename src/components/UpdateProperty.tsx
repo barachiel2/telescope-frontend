@@ -16,7 +16,13 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpd
   const [squareFootage, setSquareFootage] = useState(property.square_footage);
 
   const handleUpdate = async () => {
-    const updated = await updateProperty(property.id, address, estimatedValue, constructionYear, squareFootage);
+    const updated = await updateProperty(property.id, {
+      address,
+      estimated_value: estimatedValue,
+      construction_year: constructionYear,
+      square_footage: squareFootage,
+    });
+
     if (updated) {
       onPropertyUpdated();
       setOpen(false);

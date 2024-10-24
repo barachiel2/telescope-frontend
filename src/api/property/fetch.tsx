@@ -1,8 +1,8 @@
 import { Property } from './types';
 
-export const fetchProperties = async (): Promise<Property[] | null> => {
+export const fetchProperties = async (portfolioId: number): Promise<Property[] | null> => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/list_properties/`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/properties/list_properties/?portfolio=${portfolioId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
