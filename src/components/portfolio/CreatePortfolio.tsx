@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { createPortfolio } from '../../api/portfolio/create';
+import CustomButton from './CustomButton';
 
 interface CreatePortfolioProps {
-  onPortfolioCreated: () => void; // Callback function to reload the portfolio list after creating
+  onPortfolioCreated: () => void;
 }
 
 const CreatePortfolio: React.FC<CreatePortfolioProps> = ({ onPortfolioCreated }) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [geographicRegion, setGeographicRegion] = useState(''); // New input for geographic region
-  const [location, setLocation] = useState(''); // Placeholder for location
+  const [geographicRegion, setGeographicRegion] = useState('');
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleCreate = async () => {
-    const newPortfolio = await createPortfolio(name, description, geographicRegion, location);
+    const newPortfolio = await createPortfolio(name, description, geographicRegion, '');
     if (newPortfolio) {
       onPortfolioCreated();
       handleClose();
@@ -33,9 +28,7 @@ const CreatePortfolio: React.FC<CreatePortfolioProps> = ({ onPortfolioCreated })
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Create Portfolio
-      </Button>
+      <CustomButton onClick={handleClickOpen} label="Create Portfolio" />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create New Portfolio</DialogTitle>
         <DialogContent>
@@ -63,21 +56,10 @@ const CreatePortfolio: React.FC<CreatePortfolioProps> = ({ onPortfolioCreated })
             value={geographicRegion}
             onChange={(e) => setGeographicRegion(e.target.value)}
           />
-          {/* <TextField
-            margin="dense"
-            label="Location (Lat, Long)" // This can be improved with a map input
-            fullWidth
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          /> */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleCreate} color="primary">
-            Create
-          </Button>
+          <CustomButton onClick={handleClose} label="Cancel" colorType="secondary" />
+          <CustomButton onClick={handleCreate} label="Create" />
         </DialogActions>
       </Dialog>
     </>

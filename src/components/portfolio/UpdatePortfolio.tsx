@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { updatePortfolio } from '../../api/portfolio/update'; // Your API call
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { updatePortfolio } from '../../api/portfolio/update';
 import { Portfolio } from '../../api/portfolio/types';
+import CustomButton from './CustomButton';
 
 interface UpdatePortfolioProps {
   portfolio: Portfolio;
-  onPortfolioUpdated: () => void; // Callback function to reload the portfolio list after updating
+  onPortfolioUpdated: () => void; 
 }
 
 const UpdatePortfolio: React.FC<UpdatePortfolioProps> = ({ portfolio, onPortfolioUpdated }) => {
@@ -33,9 +34,7 @@ const UpdatePortfolio: React.FC<UpdatePortfolioProps> = ({ portfolio, onPortfoli
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Update Portfolio
-      </Button>
+      <CustomButton onClick={handleClickOpen} label="Update Portfolio" />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update Portfolio</DialogTitle>
         <DialogContent>
@@ -58,12 +57,8 @@ const UpdatePortfolio: React.FC<UpdatePortfolioProps> = ({ portfolio, onPortfoli
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleUpdate} color="primary">
-            Update
-          </Button>
+          <CustomButton onClick={handleClose} label="Cancel" colorType="secondary" />
+          <CustomButton onClick={handleUpdate} label="Update" />
         </DialogActions>
       </Dialog>
     </>
