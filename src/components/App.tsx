@@ -1,14 +1,20 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import { Container, Typography } from '@mui/material';
+import PortfolioList from './PortfolioList';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <Header />
-      <main className="p-4">
-        <h2 className="text-2xl font-bold">Welcome to Telescope Portfolio Manager</h2>
-      </main>
+      <Container component="main" sx={{ padding: '16px' }}>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Welcome to Telescope Portfolio Manager
+        </Typography>
+        {/* Include the PortfolioList component */}
+        <PortfolioList />
+      </Container>
       <Footer />
     </div>
   );
