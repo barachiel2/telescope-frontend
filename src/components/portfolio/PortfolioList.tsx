@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
+import { Card, CardContent, Typography, Grid } from '@mui/material';
 import { fetchPortfolios } from '../../api/portfolio/fetch';
 import { Portfolio } from '../../api/portfolio/types';
 import CreatePortfolio from './CreatePortfolio';
 import DeletePortfolio from './DeletePortfolio';
 import UpdatePortfolio from './UpdatePortfolio';
 import PropertyListModal from '../property/PropertyListModal';
+import CustomButton from '../CustomButton';
 
 const PortfolioList: React.FC = () => {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
@@ -56,24 +57,25 @@ const PortfolioList: React.FC = () => {
   }
 
   return (
-    <div className="bg-blue-50 p-8 min-h-screen">
+    <div className="bg-black p-8 min-h-screen">
       <CreatePortfolio onPortfolioCreated={reloadPortfolios} />
       <Grid container spacing={3}>
         {portfolios.map((portfolio) => (
           <Grid item xs={12} sm={6} md={4} key={portfolio.id}>
-            <Card className="transition duration-300 transform hover:scale-105 bg-white shadow-lg hover:bg-blue-100 border-t-4 border-blue-700">
+            <Card className="transition duration-300 transform hover:scale-105 bg-gray-800 shadow-lg hover:bg-gray-900 border-t-4 border-green-500">
               <CardContent className="p-4">
-                <Typography variant="h5" className="text-blue-900 font-bold">{portfolio.name}</Typography>
+                <Typography variant="h5" className="text-green-400 font-bold">
+                  {portfolio.name}
+                </Typography>
                 <UpdatePortfolio portfolio={portfolio} onPortfolioUpdated={reloadPortfolios} />
                 <DeletePortfolio portfolioId={portfolio.id} onPortfolioDeleted={reloadPortfolios} />
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => handleShowProperties(portfolio.id)}
-                  className="mt-4"
-                >
-                  Show Properties
-                </Button>
+                
+                {/* Styled Show Properties Button */}
+                <CustomButton 
+                  onClick={() => handleShowProperties(portfolio.id)} 
+                  label="Show Properties" 
+                  colorType="primary" 
+                />
               </CardContent>
             </Card>
           </Grid>

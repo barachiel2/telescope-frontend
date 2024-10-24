@@ -18,7 +18,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ onClick, label, colorType =
         backgroundColor: '#1C1C1C', // Black background
         color: borderColor, // Text color matches the border color
         padding: '10px 20px',
-        borderRadius: '4px',
+        borderRadius: '40px',
         border: `2px solid ${borderColor}`, // Border outline
         fontWeight: 'bold',
         cursor: 'pointer',

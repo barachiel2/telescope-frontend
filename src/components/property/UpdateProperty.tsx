@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { Property } from '../../api/property/types';
 import { updateProperty } from '../../api/property/update';
+import CustomButton from '../CustomButton';
 
 interface UpdatePropertyProps {
   property: Property;
-  onPropertyUpdated: () => void; // Callback to refresh the property list after update
+  onPropertyUpdated: () => void;
 }
 
 const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpdated }) => {
@@ -22,7 +23,6 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpd
       construction_year: constructionYear,
       square_footage: squareFootage,
     });
-
     if (updated) {
       onPropertyUpdated();
       setOpen(false);
@@ -33,9 +33,7 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpd
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
-        Update Property
-      </Button>
+      <CustomButton onClick={() => setOpen(true)} label="Update Property" colorType="primary" />
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Update Property</DialogTitle>
         <DialogContent>
@@ -73,12 +71,8 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpd
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleUpdate} color="primary">
-            Update
-          </Button>
+          <CustomButton onClick={() => setOpen(false)} label="Cancel" colorType="secondary" />
+          <CustomButton onClick={handleUpdate} label="Update" colorType="primary" />
         </DialogActions>
       </Dialog>
     </div>

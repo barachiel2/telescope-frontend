@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { createProperty } from '../../api/property/create';
+import CustomButton from '../CustomButton';
 
 interface CreatePropertyProps {
   portfolioId: number;
-  onPropertyCreated: () => void; // Callback to refresh the property list after creation
+  onPropertyCreated: () => void;
 }
 
 const CreateProperty: React.FC<CreatePropertyProps> = ({ portfolioId, onPropertyCreated }) => {
@@ -28,9 +29,7 @@ const CreateProperty: React.FC<CreatePropertyProps> = ({ portfolioId, onProperty
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-        Add Property
-      </Button>
+      <CustomButton onClick={() => setOpen(true)} label="Add Property" colorType="primary" />
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Create New Property</DialogTitle>
         <DialogContent>
@@ -68,12 +67,8 @@ const CreateProperty: React.FC<CreatePropertyProps> = ({ portfolioId, onProperty
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleCreate} color="primary">
-            Create
-          </Button>
+          <CustomButton onClick={() => setOpen(false)} label="Cancel" colorType="secondary" />
+          <CustomButton onClick={handleCreate} label="Create" colorType="primary" />
         </DialogActions>
       </Dialog>
     </div>

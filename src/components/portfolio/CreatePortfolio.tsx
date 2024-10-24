@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { createPortfolio } from '../../api/portfolio/create';
-import CustomButton from './CustomButton';
+import CustomButton from '../CustomButton';
 
 interface CreatePortfolioProps {
   onPortfolioCreated: () => void;

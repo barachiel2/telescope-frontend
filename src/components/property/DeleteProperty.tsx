@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import CustomButton from '../CustomButton';
 import { deleteProperty } from '../../api/property/delete';
 
 interface DeletePropertyProps {
   propertyId: number;
-  onPropertyDeleted: () => void; // Callback to refresh the property list after deletion
+  onPropertyDeleted: () => void;
 }
 
 const DeleteProperty: React.FC<DeletePropertyProps> = ({ propertyId, onPropertyDeleted }) => {
@@ -18,9 +18,7 @@ const DeleteProperty: React.FC<DeletePropertyProps> = ({ propertyId, onPropertyD
   };
 
   return (
-    <Button variant="outlined" color="secondary" onClick={handleDelete}>
-      Delete Property
-    </Button>
+    <CustomButton onClick={handleDelete} label="Delete Property" colorType="secondary" />
   );
 };
 
