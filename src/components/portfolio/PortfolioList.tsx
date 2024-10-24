@@ -11,7 +11,7 @@ import CustomButton from '../CustomButton';
 
 const PortfolioList: React.FC = () => {
   // Extracted color variables for easier modification
-  const backgroundColor = '#f7f7f7';
+  const backgroundColor = 'rgba(255, 255, 255, 0.7)'; // Semi-transparent white
   const cardBackgroundColor = '#2d2d2d';
   const borderColor = '#29a745';
   const textColor = '#29a745';
