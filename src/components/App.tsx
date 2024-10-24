@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import { Container, Typography } from '@mui/material';
-import PortfolioList from './PortfolioList';
+import PortfolioList from './portfolio/PortfolioList';
 
 const App: React.FC = () => {
   return (

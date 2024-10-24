@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { createPortfolio } from '../api/portfolio/create';
+import { createPortfolio } from '../../api/portfolio/create';
 
 interface CreatePortfolioProps {
   onPortfolioCreated: () => void; // Callback function to reload the portfolio list after creating

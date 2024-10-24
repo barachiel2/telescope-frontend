@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
-import { fetchPortfolios } from '../api/portfolio/fetch';
-import { Portfolio } from '../api/portfolio/types';
+import { fetchPortfolios } from '../../api/portfolio/fetch';
+import { Portfolio } from '../../api/portfolio/types';
 import CreatePortfolio from './CreatePortfolio';
 import DeletePortfolio from './DeletePortfolio';
 import UpdatePortfolio from './UpdatePortfolio';
-import PropertyListModal from './PropertyListModal';
+import PropertyListModal from '../property/PropertyListModal';
 
 const PortfolioList: React.FC = () => {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);

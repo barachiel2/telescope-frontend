@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { deletePortfolio } from '../api/portfolio/delete'; // Your API call
+import { deletePortfolio } from '../../api/portfolio/delete'; // Your API call
 
 interface DeletePortfolioProps {
   portfolioId: number;

@@ -1,43 +1,38 @@
 import React, { useState } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { Property } from '../api/property/types';
-import { updateProperty } from '../api/property/update';
+import { createProperty } from '../../api/property/create';
 
-interface UpdatePropertyProps {
-  property: Property;
-  onPropertyUpdated: () => void; // Callback to refresh the property list after update
+interface CreatePropertyProps {
+  portfolioId: number;
+  onPropertyCreated: () => void; // Callback to refresh the property list after creation
 }
 
-const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpdated }) => {
+const CreateProperty: React.FC<CreatePropertyProps> = ({ portfolioId, onPropertyCreated }) => {
   const [open, setOpen] = useState(false);
-  const [address, setAddress] = useState(property.address);
-  const [estimatedValue, setEstimatedValue] = useState(property.estimated_value);
-  const [constructionYear, setConstructionYear] = useState(property.construction_year);
-  const [squareFootage, setSquareFootage] = useState(property.square_footage);
+  const [address, setAddress] = useState('');
+  const [estimatedValue, setEstimatedValue] = useState<number | undefined>(undefined);
+  const [constructionYear, setConstructionYear] = useState<number | undefined>(undefined);
+  const [squareFootage, setSquareFootage] = useState<number | undefined>(undefined);
 
-  const handleUpdate = async () => {
-    const updated = await updateProperty(property.id, {
-      address,
-      estimated_value: estimatedValue,
-      construction_year: constructionYear,
-      square_footage: squareFootage,
-    });
-
-    if (updated) {
-      onPropertyUpdated();
-      setOpen(false);
-    } else {
-      console.error('Failed to update property');
+  const handleCreate = async () => {
+    if (address && estimatedValue && constructionYear && squareFootage) {
+      const success = await createProperty(portfolioId, address, estimatedValue, constructionYear, squareFootage);
+      if (success) {
+        onPropertyCreated();
+        setOpen(false);
+      } else {
+        console.error('Failed to create property');
+      }
     }
   };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
-        Update Property
+      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+        Add Property
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Update Property</DialogTitle>
+        <DialogTitle>Create New Property</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -76,8 +71,8 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpd
           <Button onClick={() => setOpen(false)} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleUpdate} color="primary">
-            Update
+          <Button onClick={handleCreate} color="primary">
+            Create
           </Button>
         </DialogActions>
       </Dialog>
@@ -85,4 +80,4 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({ property, onPropertyUpd
   );
 };
 
-export default UpdateProperty;
+export default CreateProperty;

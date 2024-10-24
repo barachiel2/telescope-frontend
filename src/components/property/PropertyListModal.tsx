@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Button, Grid, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
-import { fetchProperties } from '../api/property/fetch';
-import { Property } from '../api/property/types';
+import { fetchProperties } from '../../api/property/fetch';
+import { Property } from '../../api/property/types';
 import CreateProperty from './CreateProperty';
 import DeleteProperty from './DeleteProperty';
 import UpdateProperty from './UpdateProperty';

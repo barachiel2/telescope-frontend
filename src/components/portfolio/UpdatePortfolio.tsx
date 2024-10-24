@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { updatePortfolio } from '../api/portfolio/update'; // Your API call
-import { Portfolio } from '../api/portfolio/types';
+import { updatePortfolio } from '../../api/portfolio/update'; // Your API call
+import { Portfolio } from '../../api/portfolio/types';
 
 interface UpdatePortfolioProps {
   portfolio: Portfolio;

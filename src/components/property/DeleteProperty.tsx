@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import { deleteProperty } from '../api/property/delete';
+import { deleteProperty } from '../../api/property/delete';
 
 interface DeletePropertyProps {
   propertyId: number;
