@@ -12,7 +12,6 @@ const App: React.FC = () => {
         <Typography variant="h4" component="h2" gutterBottom>
           Welcome to Telescope Portfolio Manager
         </Typography>
-        {/* Include the PortfolioList component */}
         <PortfolioList />
       </Container>
       <Footer />

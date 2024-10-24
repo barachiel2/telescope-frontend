@@ -6,14 +6,16 @@ const Footer: React.FC = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: 'gray',
+        backgroundColor: '#1C1C1C',  // Darker background for contrast
         color: 'white',
         padding: '16px',
         textAlign: 'center',
         mt: 'auto',
       }}
     >
-      <Typography variant="body2">&copy; 2024 Telescope Manager</Typography>
+      <Typography variant="body2" className="text-green-500">
+        &copy; 2024 Telescope Manager
+      </Typography>
     </Box>
   );
 };
