@@ -5,14 +5,14 @@ import { Portfolio } from '../api/portfolio/types';
 import CreatePortfolio from './CreatePortfolio';
 import DeletePortfolio from './DeletePortfolio';
 import UpdatePortfolio from './UpdatePortfolio';
-import PropertyListModal from './PropertyListModal'; // Import the PropertyListModal
+import PropertyListModal from './PropertyListModal';
 
 const PortfolioList: React.FC = () => {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedPortfolioId, setSelectedPortfolioId] = useState<number | null>(null); // Track the selected portfolio for property modal
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Track modal visibility
+  const [selectedPortfolioId, setSelectedPortfolioId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const loadPortfolios = async () => {
@@ -37,13 +37,11 @@ const PortfolioList: React.FC = () => {
     }
   };
 
-  // Open the properties modal for a specific portfolio
   const handleShowProperties = (portfolioId: number) => {
     setSelectedPortfolioId(portfolioId);
     setIsModalOpen(true);
   };
 
-  // Close the properties modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedPortfolioId(null);
@@ -58,22 +56,21 @@ const PortfolioList: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="bg-blue-50 p-8 min-h-screen">
       <CreatePortfolio onPortfolioCreated={reloadPortfolios} />
       <Grid container spacing={3}>
         {portfolios.map((portfolio) => (
           <Grid item xs={12} sm={6} md={4} key={portfolio.id}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5">{portfolio.name}</Typography>
+            <Card className="transition duration-300 transform hover:scale-105 bg-white shadow-lg hover:bg-blue-100 border-t-4 border-blue-700">
+              <CardContent className="p-4">
+                <Typography variant="h5" className="text-blue-900 font-bold">{portfolio.name}</Typography>
                 <UpdatePortfolio portfolio={portfolio} onPortfolioUpdated={reloadPortfolios} />
                 <DeletePortfolio portfolioId={portfolio.id} onPortfolioDeleted={reloadPortfolios} />
-
-                {/* Show Properties Button */}
                 <Button
                   variant="outlined"
                   color="primary"
                   onClick={() => handleShowProperties(portfolio.id)}
+                  className="mt-4"
                 >
                   Show Properties
                 </Button>
@@ -83,7 +80,6 @@ const PortfolioList: React.FC = () => {
         ))}
       </Grid>
 
-      {/* Modal for displaying properties */}
       {selectedPortfolioId !== null && (
         <PropertyListModal
           portfolioId={selectedPortfolioId}
